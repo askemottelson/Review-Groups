@@ -19,5 +19,8 @@ dist/*
 build/*
 store/*
 
+# personal stuff
+test.sh
+
 # Review data
 review-data/*
