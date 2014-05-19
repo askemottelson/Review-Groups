@@ -5,7 +5,7 @@ if [ $1 = "clean" ]; then
     rm -rf dist
     rm -rf build
 else
-    java -jar dist/review-combined.jar $1 $2 $3 $4 $5
+    java -jar dist/Review.jar $1 $2 $3 $4 $5
 fi
 
 

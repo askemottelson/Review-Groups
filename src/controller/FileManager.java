@@ -1,10 +1,12 @@
 package controller;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Files;
@@ -47,7 +49,11 @@ public class FileManager {
     
     
     public File getFirstFile(String path){
+        
         final File folder = new File(path);
+        if(!folder.exists())
+            return null;
+        
         for (final File fileEntry : folder.listFiles()) {
             if (!fileEntry.isDirectory()) {
                 return fileEntry;
@@ -57,11 +63,29 @@ public class FileManager {
         return null;
     }
     
+    public String getEmailMessage(){
+        ClassLoader cl = this.getClass().getClassLoader();
+        InputStream stream = cl.getResourceAsStream("etc/email.txt");
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(stream));
+        String message = "";
+
+        try{
+            String thisline;
+            while ((thisline = input.readLine()) != null) {
+                message += thisline + "\n";
+            }
+        } catch(IOException e){
+            return "";
+        }
+
+        return message;
+    }
     
     public Boolean createDB(){
         try{
             ClassLoader cl = this.getClass().getClassLoader();
-            InputStream stream = cl.getResourceAsStream("data.db");
+            InputStream stream = cl.getResourceAsStream("etc/data.db");
             
             File file = new File("review-data/data.db");
             OutputStream out = new FileOutputStream(file);

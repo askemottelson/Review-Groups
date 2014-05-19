@@ -1,0 +1,5 @@
+Hi $student$ from group $group$!
+
+Please see attached assignment $filename$.
+
+Best regards $teacher$.

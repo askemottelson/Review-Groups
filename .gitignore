@@ -16,3 +16,7 @@ build.xml
 manifest.mf
 nbproject/*
 dist/*
+build/*
+
+# Review data
+review-data/*

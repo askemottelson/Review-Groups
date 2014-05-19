@@ -16,13 +16,16 @@ public class MessageSystem {
     public void setup(DataBaseManager db){
         Console cons = System.console();
         
+        System.out.print("Enter your name: ");
+        String name = cons.readLine();
+        
         System.out.print("Enter gmail username: ");
         String mail = cons.readLine();
 
         System.out.print("Enter gmail password: ");
-        String pass = cons.readPassword().toString();
+        String pass = String.valueOf( cons.readPassword() );
         
-        db.setAppInfo(mail,pass);
+        db.setAppInfo(name,mail,pass);
     }
     
     
@@ -56,6 +59,9 @@ public class MessageSystem {
                 break;
             case 6:
                 System.out.println("Err: not all groups has assignment for this review");
+                break;
+            case 7:
+                System.out.println("Err: no settings found. Please run program with setup as argument");
                 break;
             default:
                 System.out.println("Err: unkown err");

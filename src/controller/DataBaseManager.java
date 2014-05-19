@@ -55,10 +55,10 @@ public class DataBaseManager {
 
     
     
-    public void setAppInfo(String user, String pass){
+    public void setAppInfo(String teacher, String user, String pass){
         this.query("DELETE FROM app_info;");
-        String[] args = {user, pass};
-        this.prepareQuery("INSERT INTO app_info(username,password) VALUES(?,?);", args);
+        String[] args = {teacher, user, pass};
+        this.prepareQuery("INSERT INTO app_info(teacher,username,password) VALUES(?,?,?);", args);
     }
     
     public ArrayList<Group> getGroups(){
@@ -75,7 +75,7 @@ public class DataBaseManager {
              + "FROM groups, users "
              + "WHERE groups.id = users.group_id;"
              */
-               "SELECT * FROM groups LEFT JOIN users on users.group_id = groups.id;"
+               "SELECT * FROM groups LEFT JOIN users on users.group_id = groups.id ORDER BY groups.id;"
             );
             
             Group last_group = new Group();
@@ -86,6 +86,7 @@ public class DataBaseManager {
                 int gid = rs.getInt(1);
                 
                 Group g;
+                
                 if(last_group.getId() != gid){
                     g = new Group();
                     g.setId(gid);
@@ -105,6 +106,7 @@ public class DataBaseManager {
 
                     g.addUser(u);
                 }
+                last_group = g;
             }
             stmt.close();
             c.close();
@@ -138,5 +140,35 @@ public class DataBaseManager {
         this.prepareQuery("INSERT INTO users(group_id,name,email) VALUES(?,?,?);", args);
     }
     
-    
+    public Settings getSettings(){
+        ArrayList<Group> list = new ArrayList<>();
+        
+        Settings s = new Settings();
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:review-data/data.db");
+
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery(
+               "SELECT * FROM app_info;"
+            );
+            
+            while (rs.next()) {
+                String teacher = rs.getString("teacher");
+                String user = rs.getString("username");
+                String pass = rs.getString("password");
+                s.setTeacher(teacher);
+                s.setUsername(user);
+                s.setPassword(pass);
+                break;
+            }
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return s;
+    }
 }

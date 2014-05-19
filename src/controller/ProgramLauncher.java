@@ -1,9 +1,16 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import view.MessageSystem;
 import model.*;
 import java.util.ArrayList;
+
 
 
 public class ProgramLauncher {
@@ -174,15 +181,63 @@ public class ProgramLauncher {
                  * send each one
                  * 
                  */
+                
+                /*
+                 * first review:
+                 * 1->2
+                 * 2->3
+                 * 3->1
+                 * 
+                 * general:
+                 * i-> ((i + ass_no) % group_numbers)
+                 */
+                
                 this.checkArgs(args,3,2);
                 int assignment_no = Integer.parseInt(args[2]);
+                
                 for(Group g : this.groups){
                     File assignment = fm.getFirstFile("./review-data/assignments/" + g.getName() + "/" + assignment_no + "/");
                     if(assignment == null){
                         ms.err(6);
                     }
+                    g.setAssignment(assignment);
+                }
+                
+                MailManager mm = new MailManager();
                     
+                Settings s = db.getSettings();
+                mm.setUsername(s.getUsername());
+                mm.setPassword(s.getPassword());
+                
+                String message = fm.getEmailMessage();
+                
+                int i = 0;
+                for(Group g : this.groups){
+                    // group i should have group ((i + ass_no) % group_numbers) 's assignment
+                    int ith = (i + assignment_no) % this.groups.size();
                     
+                    // dont get your own group's review
+                    if(ith == i)
+                        ith++;
+                    
+                    File review = this.groups.get(ith).getAssignment();
+                    i++;
+                    
+                    for(User u : g.getUsers()){
+                        // update variables
+                        message = message.replaceAll("\\$student\\$", u.getName());
+                        message = message.replaceAll("\\$group\\$", g.getName());
+                        message = message.replaceAll("\\$filename\\$", review.getName());
+                        message = message.replaceAll("\\$teacher\\$", s.getTeacher());
+                        
+                        String name = u.getName();
+                        String email = u.getEmail();
+                        
+                        Boolean sent = mm.send(email, "Review", message, review, review.getName());
+                        if(!sent){
+                            ms.err(7);
+                        }
+                    }
                 }
                 
                 break;
