@@ -97,8 +97,8 @@ public class ProgramLauncher {
     
     private void student(String[] args){
         /*
-         * add <name>
-         * rm <name>
+         * add <group_name> <name> <email> 
+         * rm <email>
          */
         String group;
         String name;

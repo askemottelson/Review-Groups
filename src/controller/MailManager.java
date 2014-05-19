@@ -46,20 +46,25 @@ public class MailManager {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
             message.setSubject(subject);
+            message.setText(text);
             
 
+            Multipart multipart = new MimeMultipart();
+            
             MimeBodyPart textPart = new MimeBodyPart();
             textPart.setText(text, "utf-8");
 
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            Multipart multipart = new MimeMultipart();
 
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            
             DataSource source = new FileDataSource(file.getPath()); // maybe file.path
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
             
+            
             multipart.addBodyPart(textPart);
             multipart.addBodyPart(messageBodyPart);
+            
 
             message.setContent(multipart);
 
@@ -70,7 +75,8 @@ public class MailManager {
             System.out.println("Done");
 
         } catch (MessagingException e) {
-            System.out.print("Could not connect to gmail. Maybe your password is wrong, or no internet connection?");
+            System.out.println("Could not connect to gmail. Maybe your password is wrong, or no internet connection?");
+            e.printStackTrace();
             System.exit(1);
         }
         return true;

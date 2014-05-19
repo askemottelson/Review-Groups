@@ -17,6 +17,7 @@ manifest.mf
 nbproject/*
 dist/*
 build/*
+store/*
 
 # Review data
 review-data/*

@@ -29,15 +29,14 @@ public class MessageSystem {
     }
     
     
-    
     public void help(){
-        
-        System.out.println("1. view groups");
-        System.out.println("2. add group");
-        System.out.println("3. edit group");
-        System.out.println("4. add review");
-        System.out.println("0. exit");
-
+        System.out.println("Available arguments:");
+        System.out.println("setup");
+        System.out.println("group (view | add <groupname> |rm <groupname>)");
+        System.out.println("student (add <group_name> <name> <email> | rm <email>)");
+        System.out.println("assignment (add <group_name> <assignment_no> <file_url> | rm <group_name> <assignment_no>)");
+        System.out.println("review send <assignment_no>");
+        System.out.println("help");
     }
     
     public void err(int err){
@@ -79,9 +78,6 @@ public class MessageSystem {
            }
         }
     }
-    
-
-    
     
     
 }
