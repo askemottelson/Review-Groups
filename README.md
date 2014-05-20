@@ -43,7 +43,7 @@ Inside etc/email.txt (in the .jar file or in source), you can find the template 
 
 Commands
 --------
-``` java
+```
 setup
 group (view | add <groupname> |rm <groupname>)
 student (add <group_name> <name> <email> | rm <email>)
