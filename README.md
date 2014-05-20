@@ -2,20 +2,17 @@ Review-Groups
 =============
 
 Imagine the following scenario:
-You are a teacher, and you have a bunch of students divided into groups. Each group is supposed critize another group's assignment, and it is your job to distribute the assignments among the groups, so each group get exactly one other group's assignment, and no group is left out. On top of that no group can critizie the same group as last time!
+You are a teacher, and you have a bunch of students divided into groups. Each group is supposed to critize another group's assignment, and it is your job to distribute the assignments among the groups, so each group get exactly one other group's assignment, and no group is left out. On top of that no group can review the same group as last time!
 
-Solving this manually you will need to keep a somewhat complicated table of recent assignments, and group members, and send each group an email, with attachments. This is prone to a lot of mistakes, and worst of all: waste of time.
-
+Solving this manually, you will need to keep a somewhat complicated table of recent assignments and group members, and send each group an email with attachments. This is prone to a lot of mistakes, and worst of all: it is a waste of time.
 
 This project aims to solve this problem! So get a copy of the [latest release](https://github.com/askemottelson/Review-Groups/releases) and follow beneath guides to get started!
 
-Assuming you have `Review.jar` at your disposal, fire up a terminal and write
-
+Assuming you have `Review.jar` at your disposal and java installed, fire up a terminal and write
 ```
 java -jar Review.jar setup
 ```
-
-And enter you gmail account settings (currently only supports gmail).
+Enter you gmail account settings (currently only supports gmail).
 
 Next add all the groups
 ```
