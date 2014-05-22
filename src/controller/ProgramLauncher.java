@@ -209,7 +209,7 @@ public class ProgramLauncher {
                 mm.setUsername(s.getUsername());
                 mm.setPassword(s.getPassword());
                 
-                String message = fm.getEmailMessage();
+                
                 
                 int i = 0;
                 for(Group g : this.groups){
@@ -225,6 +225,7 @@ public class ProgramLauncher {
                     
                     for(User u : g.getUsers()){
                         // update variables
+                        String message = fm.getEmailMessage();
                         message = message.replaceAll("\\$student\\$", u.getName());
                         message = message.replaceAll("\\$group\\$", g.getName());
                         message = message.replaceAll("\\$filename\\$", review.getName());
